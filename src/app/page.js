@@ -114,7 +114,7 @@ What is Propositional logic and First order logic in AI? Discuss with suitable e
 
   const url =
     process.env.NODE_ENV == 'production'
-      ? process.env.NEXT_PUBLIC_API_URL
+      ? 'https://module-predictor.onrender.com'
       : 'http://localhost:5000';
 
   const processSyllabus = async () => {
