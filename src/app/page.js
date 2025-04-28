@@ -112,6 +112,11 @@ What is Propositional logic and First order logic in AI? Discuss with suitable e
     setQuestions(demoQuestions);
   };
 
+  const url =
+    process.env.NODE_ENV == 'production'
+      ? 'https://module-predictor.onrender.com'
+      : 'http://localhost:5000';
+
   const processSyllabus = async () => {
     if (!syllabus.trim()) {
       alert('⚠️ Please paste the syllabus text before submitting.');
@@ -119,12 +124,9 @@ What is Propositional logic and First order logic in AI? Discuss with suitable e
     }
 
     try {
-      const response = await axios.post(
-        'http://localhost:5000/process-syllabus',
-        {
-          text: syllabus,
-        }
-      );
+      const response = await axios.post(`${url}/process-syllabus`, {
+        text: syllabus,
+      });
 
       if (response.data?.message) {
         alert(`✅ ${response.data.message}`);
@@ -138,7 +140,7 @@ What is Propositional logic and First order logic in AI? Discuss with suitable e
   };
 
   const trainModel = async () => {
-    await axios.post('http://localhost:5000/train-model');
+    await axios.post(`${url}/train-model`);
     alert('Model trained successfully!');
   };
 
@@ -154,7 +156,7 @@ What is Propositional logic and First order logic in AI? Discuss with suitable e
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/predict', {
+      const res = await axios.post(`${url}/predict`, {
         questions: qList,
       });
 
