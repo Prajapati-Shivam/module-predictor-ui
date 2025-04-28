@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📚 Unit Predictor App
 
-## Getting Started
+This is a web application that predicts the **Unit/Module number** of a question based on the uploaded syllabus.
 
-First, run the development server:
+Built with:
+- **Backend:** Python Flask (deployed on Render)
+- **Frontend:** Next.js (React) (to be deployed on Vercel)
+- **Machine Learning Model:** Naive Bayes Classifier + CountVectorizer
+
+---
+
+## ✨ Features
+
+- Upload **raw syllabus text** (module number + topics)
+- Backend processes syllabus and creates a **clean CSV** (Unit, Topics).
+- Ask **any questions** — the model predicts **which Unit** the question belongs to.
+- Questions grouped **unit-wise** for better readability.
+
+---
+
+## 🛠 Project Structure
+
+```bash
+unit-predictor/
+│
+├── backend/ (Flask API)
+│   ├── app.py
+│   ├── requirements.txt
+│   ├── module_data.csv (generated dynamically)
+│   └── .gitignore
+│
+├── frontend/ (Next.js app)
+│   ├── pages/
+│   ├── components/
+│   ├── public/
+│   ├── .env.local
+│   └── package.json
+```
+
+---
+
+## 🚀 How to Run Locally
+
+### Backend (Flask API)
+
+1. Go inside the backend folder:
+
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate   # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+2. Start the server:
+
+```bash
+python app.py
+```
+- Flask app will run at `http://localhost:5000/`
+
+---
+
+### Frontend (Next.js)
+
+1. Go inside the frontend folder:
+
+```bash
+cd frontend
+npm install
+```
+
+2. Create `.env.local` file:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
+3. Start the frontend:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+- Frontend will run at `http://localhost:3000/`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📋 How It Works (User Guide)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Step 1:** Paste your **raw syllabus text** (module-wise topics) into the input box and click "Process Syllabus".
+2. **Step 2:** System processes the syllabus, creates an internal **CSV**.
+3. **Step 3:** Enter your **questions** (one per line) in the question box.
+4. **Step 4:** Click "Predict Questions" — it will display all questions **grouped by their predicted Unit numbers**.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🧹 Notes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Syllabus Input Format:**  
+  Must contain **module number** followed by detailed topics.
+- **Error Handling:**  
+  If syllabus format is incorrect, user will be alerted.
+- **No uploading of Introduction, CO No., Ref No.**, etc. Only Module Number and Topics are processed.
+- **Subtopics and Self-Learning Topics** are merged automatically.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📦 Deployment Steps (Summary)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Backend** deployed to **Render** using `gunicorn app:app`.
+- **Frontend** deployed to **Vercel**.
+- API URL updated from `localhost` to live Render URL.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 👨‍💻 Technologies Used
+
+- Flask
+- Scikit-learn
+- Pandas
+- Gunicorn
+- React (Next.js)
+- Axios
+- Tailwind CSS (if styling used)
